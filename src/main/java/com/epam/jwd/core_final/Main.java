@@ -44,47 +44,6 @@ public class Main {
         } catch (InvalidStateException | UnknownEntityException | IOException e) {
             System.out.println(e.getMessage());
         }
-
-        //      MenuMissionServiceImpl.getInstance().createMission();
-
-//        ArrayList<CrewMember> collection = (ArrayList<CrewMember>) NassaContext.getInstance().retrieveBaseEntityList(CrewMember.class);
-//        System.out.println(collection.get(1));
-//
-//        CrewMemberCriteria criteria = new CrewMemberCriteria();
-//        criteria.setName("Davey Bentley");
-//        criteria.build();
-//        System.out.println(criteria.build().toString());
-//        CrewServiceImpl service = CrewServiceImpl.getInstance();
-//        System.out.println(service.findCrewMemberByCriteria(criteria).get().toString());
-//
-        //  FlightMission mission = MissionServiceImpl.getInstance().createMission("test", LocalDate.now(), LocalDate.of(2020, 10, 7), 10000L);
-//
-//        String baseFile = "src/main/resources/output/mission.json";
-//        File file = new File(baseFile);
-//        Files.createDirectory(new Path())
-//        try {
-//            file.createNewFile();
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//
-//        ObjectMapper mapper = new ObjectMapper();
-//        try {
-//            mapper.writeValue(file, mission);
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//        System.out.println("json created!");
-
-
-//
-//        Test test = new Test(1,"A");
-//        List<Test> list = new ArrayList<>();
-//        list.add(test);
-//        list.add(new Test(2,"B"));
-//        ObjectMapper mapper = new ObjectMapper();
-//        mapper.writeValue(new File("A"), list);
-
     }
 
     public static void createOutputDirectory() {
@@ -98,29 +57,3 @@ public class Main {
         }
     }
 }
-
-
-//class Test {
-//    private int id;
-//    private String name;
-//
-//    public int getId() {
-//        return id;
-//    }
-//
-//    public void setId(int id) {
-//        this.id = id;
-//    }
-//
-//    public String getName() {
-//        return name;
-//    }
-//
-//    public void setName(String name) {
-//        this.name = name;
-//    }
-//
-//    public Test(int id, String name) {
-//        this.id = id;
-//        this.name = name;
-//    }
