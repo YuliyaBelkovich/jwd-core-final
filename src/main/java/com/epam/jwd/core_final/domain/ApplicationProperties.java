@@ -14,6 +14,67 @@ package com.epam.jwd.core_final.domain;
  * fileRefreshRate {@link Integer}
  * dateTimeFormat {@link String} - date/time format for {@link java.time.format.DateTimeFormatter} pattern
  */
-public class ApplicationProperties {
-    //todo
+
+// singleton
+public final class ApplicationProperties {
+
+    private static ApplicationProperties applicationProperties;
+
+    private final String inputRootDir;
+    private final String outputRootDir;
+    private final String crewFileName;
+    private final String missionsFileName;
+    private final String spaceshipsFileName;
+    private final Integer fileRefreshRate;
+    private final String dateTimeFormat;
+
+    private ApplicationProperties(String inputRootDir, String outputRootDir, String crewFileName, String missionsFileName, String spaceshipsFileName, Integer fileRefreshRate, String dateTimeFormat) {
+        this.inputRootDir = inputRootDir;
+        this.outputRootDir = outputRootDir;
+        this.crewFileName = crewFileName;
+        this.missionsFileName = missionsFileName;
+        this.spaceshipsFileName = spaceshipsFileName;
+        this.fileRefreshRate = fileRefreshRate;
+        this.dateTimeFormat = dateTimeFormat;
+    }
+
+    public static ApplicationProperties getInstance(String inputRootDir, String outputRootDir, String crewFileName, String missionsFileName, String spaceshipsFileName, Integer fileRefreshRate, String dateTimeFormat) {
+        if (applicationProperties == null) {
+            return applicationProperties = new ApplicationProperties(inputRootDir, outputRootDir, crewFileName, missionsFileName, spaceshipsFileName, fileRefreshRate, dateTimeFormat);
+        } else {
+            return applicationProperties;
+        }
+    }
+
+    public static ApplicationProperties getInstance() {
+        return applicationProperties;
+    }
+
+    public String getInputRootDir() {
+        return inputRootDir;
+    }
+
+    public String getOutputRootDir() {
+        return outputRootDir;
+    }
+
+    public String getCrewFileName() {
+        return crewFileName;
+    }
+
+    public String getMissionsFileName() {
+        return missionsFileName;
+    }
+
+    public String getSpaceshipsFileName() {
+        return spaceshipsFileName;
+    }
+
+    public Integer getFileRefreshRate() {
+        return fileRefreshRate;
+    }
+
+    public String getDateTimeFormat() {
+        return dateTimeFormat;
+    }
 }
