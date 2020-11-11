@@ -2,19 +2,20 @@ package com.epam.jwd.core_final.context;
 
 import com.epam.jwd.core_final.context.menu.Menu;
 
-import java.util.InputMismatchException;
 import java.util.Scanner;
 
 // todo replace Object with your own types
 @FunctionalInterface
 public interface ApplicationMenu {
 
-    ApplicationContext getApplicationContext(); // в методе гет менющку должен возвращать
+    ApplicationContext getApplicationContext();
 
     default void printAvailableOptions(Menu menu) {
         switch (menu) {
             case START: {
-                System.out.println("Press 1 to go to the MISSION CONTROL PANEL\n" +
+                System.out.println("Welcome to the SUPER SECRET NASA CONTROL PANEL, Your Majesty The Supreme Commander!\n" +
+                        "Let's see what you can do:\n" +
+                        "Press 1 to go to the MISSION CONTROL PANEL\n" +
                         "Press 2 to go to the CREW CONTROL PANEL\n" +
                         "Press 3 to go to the SPACESHIP CONTROL PANEL\n" +
                         "Press 4 to EXIT\n");
@@ -81,6 +82,9 @@ public interface ApplicationMenu {
                         "Press 2 to change the distance\n" +
                         "Press 3 to return to the spaceship control panel\n");
                 break;
+            }
+            case EXIT:{
+                System.out.println("Goodbye Your Majesty! Hope to see you soon! ^-^");
             }
             default: {
             }
