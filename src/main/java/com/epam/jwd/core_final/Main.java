@@ -8,7 +8,6 @@ import com.epam.jwd.core_final.context.menu.MenuContext;
 import com.epam.jwd.core_final.domain.ApplicationProperties;
 import com.epam.jwd.core_final.exception.InvalidStateException;
 import com.epam.jwd.core_final.exception.UnknownEntityException;
-import org.apache.log4j.Logger;
 
 import java.io.File;
 import java.io.IOException;
@@ -16,13 +15,15 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
+import org.apache.log4j.Logger;
+
+
 public class Main {
 
     private static final Logger log = Logger.getLogger(Main.class);
 
     public static void main(String[] args) {
         createOutputDirectory();
-
 
         ApplicationMenu menuApp;
         try {
@@ -41,6 +42,7 @@ public class Main {
                     Application.start();
                 }
             }
+            menuApp.printAvailableOptions(Menu.EXIT);
         } catch (InvalidStateException | UnknownEntityException | IOException e) {
             System.out.println(e.getMessage());
         }
@@ -52,7 +54,7 @@ public class Main {
             try {
                 Files.createDirectory(outputDir);
             } catch (IOException e) {
-                log.debug("Trying to create existing directory");
+                log.warn("Trying to create existing directory");
             }
         }
     }
