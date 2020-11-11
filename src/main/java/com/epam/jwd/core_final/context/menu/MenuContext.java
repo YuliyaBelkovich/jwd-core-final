@@ -1,19 +1,16 @@
 package com.epam.jwd.core_final.context.menu;
 
 import com.epam.jwd.core_final.domain.CrewMember;
-import com.epam.jwd.core_final.domain.FlightMission;
 import com.epam.jwd.core_final.domain.Spaceship;
 import com.epam.jwd.core_final.exception.StorageException;
 import com.epam.jwd.core_final.service.entity.CrewService;
 import com.epam.jwd.core_final.service.menu.MenuCrewService;
 import com.epam.jwd.core_final.service.menu.MenuMissionService;
-import com.epam.jwd.core_final.service.entity.MissionService;
 import com.epam.jwd.core_final.service.entity.SpaceshipService;
 import com.epam.jwd.core_final.service.entity.impl.CrewServiceImpl;
 import com.epam.jwd.core_final.service.menu.MenuSpaceshipService;
 import com.epam.jwd.core_final.service.menu.impl.MenuCrewServiceImpl;
 import com.epam.jwd.core_final.service.menu.impl.MenuMissionServiceImpl;
-import com.epam.jwd.core_final.service.entity.impl.MissionServiceImpl;
 import com.epam.jwd.core_final.service.entity.impl.SpaceshipServiceImpl;
 import com.epam.jwd.core_final.service.menu.impl.MenuSpaceshipServiceImpl;
 import org.apache.log4j.Logger;
@@ -93,13 +90,8 @@ public class MenuContext {
     private void assignMissionCriteriaOptions() {
         /*search all missions*/
         this.storage.put(new KeyMenu(Menu.MISSION_CRITERIA, 1), () -> {
-            MissionService service = MissionServiceImpl.getInstance();
-            for (FlightMission mission : service.findAllMissions()) {
-                if (mission != null) {
-                    MissionServiceImpl.getInstance().writeToJson(mission);
-                    System.out.println(mission.toString());
-                }
-            }
+            MenuMissionService service = MenuMissionServiceImpl.getInstance();
+            service.searchAllMissions();
             return Menu.MISSION_CRITERIA;
         });
 

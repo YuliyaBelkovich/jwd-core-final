@@ -119,7 +119,7 @@ public class MissionServiceImpl implements MissionService {
         return mission;
     }
 
-    public void writeToJson(FlightMission flightMission) {
+    public void writeOneMissionToJson(FlightMission flightMission) {
         String baseFile = "src" + File.separator
                 + "main" + File.separator +
                 "resources" + File.separator +
@@ -130,7 +130,7 @@ public class MissionServiceImpl implements MissionService {
         FileWriter fileWriter = null;
         try {
             file.createNewFile();
-            fileWriter = new FileWriter(baseFile, true);
+            fileWriter = new FileWriter(baseFile, false);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -138,6 +138,30 @@ public class MissionServiceImpl implements MissionService {
         ObjectMapper mapper = new ObjectMapper().enable(SerializationFeature.INDENT_OUTPUT);
         try {
             mapper.writeValue(fileWriter, flightMission);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void writeMissionsListToJson(List <FlightMission> flightMissions) {
+        String baseFile = "src" + File.separator
+                + "main" + File.separator +
+                "resources" + File.separator +
+                "output" + File.separator +
+                ApplicationProperties.getInstance().getMissionsFileName() + ".json";
+
+        File file = new File(baseFile);
+        FileWriter fileWriter = null;
+        try {
+            file.createNewFile();
+            fileWriter = new FileWriter(baseFile, false);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        ObjectMapper mapper = new ObjectMapper().enable(SerializationFeature.INDENT_OUTPUT);
+        try {
+            mapper.writeValue(fileWriter, flightMissions);
         } catch (IOException e) {
             e.printStackTrace();
         }

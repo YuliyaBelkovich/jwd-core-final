@@ -3,6 +3,8 @@ package com.epam.jwd.core_final.service.menu;
 public interface MenuMissionService {
     void createMission();
 
+    void searchAllMissions();
+
     void searchMissionById();
 
     void searchMissionByName();

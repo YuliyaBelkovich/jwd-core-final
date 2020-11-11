@@ -19,4 +19,8 @@ public interface MissionService {
     FlightMission updateMissionDetails(FlightMission flightMission);
 
     FlightMission createMission(String name, LocalDateTime startDate, LocalDateTime endDate, Long distance) throws EntityCreationException;
+
+    void writeOneMissionToJson(FlightMission flightMission);
+
+    void writeMissionsListToJson(List<FlightMission> flightMissions);
 }

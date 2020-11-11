@@ -6,6 +6,7 @@ import com.epam.jwd.core_final.domain.FlightMission;
 import com.epam.jwd.core_final.domain.MissionStatus;
 import com.epam.jwd.core_final.exception.EntityCreationException;
 import com.epam.jwd.core_final.exception.StorageException;
+import com.epam.jwd.core_final.service.entity.MissionService;
 import com.epam.jwd.core_final.service.entity.impl.MissionServiceImpl;
 import com.epam.jwd.core_final.service.menu.MenuMissionService;
 
@@ -54,8 +55,20 @@ public class MenuMissionServiceImpl implements MenuMissionService {
         }
     }
 
+    public void searchAllMissions() {
+        MissionService service = MissionServiceImpl.getInstance();
+        List<FlightMission> result = service.findAllMissions();
+        if (result.size() > 0) {
+            service.writeMissionsListToJson(result);
+        }
+        for (FlightMission mission : result) {
+            if (mission != null) {
+                System.out.println(mission.toString());
+            }
+        }
+    }
+
     public void searchMissionById() throws StorageException {
-        Scanner scanner = new Scanner(System.in);
         long input = validateLongInput("Enter the id\n");
 
         FlightMissionCriteria criteria = FlightMissionCriteria
@@ -65,6 +78,7 @@ public class MenuMissionServiceImpl implements MenuMissionService {
 
         this.entity = MissionServiceImpl.getInstance().findMissionByCriteria(criteria).orElseThrow(() -> new StorageException("Mission not found"));
         System.out.println(entity.toString());
+        MissionServiceImpl.getInstance().writeOneMissionToJson(entity);
     }
 
     public void searchMissionByName() throws StorageException {
@@ -77,7 +91,7 @@ public class MenuMissionServiceImpl implements MenuMissionService {
                 .build();
 
         this.entity = MissionServiceImpl.getInstance().findMissionByCriteria(criteria).orElseThrow(() -> new StorageException("Mission not found"));
-        System.out.println(entity.toString());
+        MissionServiceImpl.getInstance().writeOneMissionToJson(entity);
     }
 
     public void searchMissionByDistance() throws StorageException {
@@ -90,7 +104,7 @@ public class MenuMissionServiceImpl implements MenuMissionService {
                 .build();
 
         this.entity = MissionServiceImpl.getInstance().findMissionByCriteria(criteria).orElseThrow(() -> new StorageException("Mission not found"));
-        System.out.println(entity.toString());
+        MissionServiceImpl.getInstance().writeOneMissionToJson(entity);
     }
 
     public void searchAllByStartDate() throws StorageException {
@@ -118,6 +132,7 @@ public class MenuMissionServiceImpl implements MenuMissionService {
         for (FlightMission mission : result) {
             System.out.println(mission.toString() + "\n");
         }
+        MissionServiceImpl.getInstance().writeMissionsListToJson(result);
     }
 
     public void updateMissionName() {
