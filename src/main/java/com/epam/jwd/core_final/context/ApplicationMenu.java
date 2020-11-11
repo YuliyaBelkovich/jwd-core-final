@@ -1,8 +1,7 @@
 package com.epam.jwd.core_final.context;
 
 import com.epam.jwd.core_final.context.menu.Menu;
-
-import java.util.Scanner;
+import static com.epam.jwd.core_final.util.InputValidator.validateIntInput;
 
 // todo replace Object with your own types
 @FunctionalInterface
@@ -92,15 +91,7 @@ public interface ApplicationMenu {
     }
 
     default Integer handleUserInput() {
-        Scanner scanner = new Scanner(System.in);
-        int input;
-        do {
-            while (!scanner.hasNextInt()) {
-                String tmp = scanner.next();
-                System.out.println("Invalid input. Please, enter the correct number");
-            }
-            input = scanner.nextInt();
-        } while (input < 0);
+        int input = validateIntInput("Your choice\n");
         return input;
     }
 }

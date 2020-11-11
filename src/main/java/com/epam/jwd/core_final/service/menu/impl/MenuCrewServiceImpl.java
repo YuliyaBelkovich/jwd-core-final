@@ -11,6 +11,7 @@ import com.epam.jwd.core_final.service.menu.MenuCrewService;
 
 import java.util.List;
 import java.util.Scanner;
+import static com.epam.jwd.core_final.util.InputValidator.validateIntInput;
 
 public class MenuCrewServiceImpl implements MenuCrewService {
 
@@ -52,16 +53,7 @@ public class MenuCrewServiceImpl implements MenuCrewService {
     }
 
     public void searchAllCrewMembersByRank() throws StorageException {
-        Scanner scanner = new Scanner(System.in);
-        int input;
-        do {
-            System.out.println("Enter the rank id\n");
-            while (!scanner.hasNextInt()) {
-                System.out.println("That's not a number!");
-                scanner.next();
-            }
-            input = scanner.nextInt();
-        } while (input < 0);
+       int input = validateIntInput("Enter the rank id\n");
 
         CrewMemberCriteria criteria = CrewMemberCriteria
                 .builder()
@@ -82,16 +74,7 @@ public class MenuCrewServiceImpl implements MenuCrewService {
     }
 
     public void searchAllCrewMembersByRole() throws StorageException {
-        Scanner scanner = new Scanner(System.in);
-        int input;
-        do {
-            System.out.println("Enter the role id\n");
-            while (!scanner.hasNextInt()) {
-                System.out.println("That's not a number!");
-                scanner.next();
-            }
-            input = scanner.nextInt();
-        } while (input < 0);
+        int input = validateIntInput("Enter the role id\n");
 
         CrewMemberCriteria criteria = CrewMemberCriteria
                 .builder()
@@ -124,16 +107,7 @@ public class MenuCrewServiceImpl implements MenuCrewService {
 
     public void updateCrewMembersRole() {
         if (this.entity.isReadyForNextMissions()) {
-            Scanner scanner = new Scanner(System.in);
-            int input;
-            do {
-                System.out.println("Enter the role id\n");
-                while (!scanner.hasNextInt()) {
-                    System.out.println("That's not a number!");
-                    scanner.next();
-                }
-                input = scanner.nextInt();
-            } while (input < 0);
+            int input = validateIntInput("Enter the role id\n");
 
             this.entity.setRole(Role.resolveRoleById(input));
             System.out.println("Role updated!");
@@ -144,16 +118,7 @@ public class MenuCrewServiceImpl implements MenuCrewService {
 
     public void updateCrewMembersRank() {
         if (this.entity.isReadyForNextMissions()) {
-            Scanner scanner = new Scanner(System.in);
-            int input;
-            do {
-                System.out.println("Enter the rank id\n");
-                while (!scanner.hasNextInt()) {
-                    System.out.println("That's not a number!");
-                    scanner.next();
-                }
-                input = scanner.nextInt();
-            } while (input < 0);
+            int input = validateIntInput("Enter the rank id\n");
 
             this.entity.setRank(Rank.resolveRankById(input));
             System.out.println("Rank updated!");

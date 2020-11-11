@@ -14,6 +14,9 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Scanner;
 
+import static com.epam.jwd.core_final.util.InputValidator.validateIntInput;
+import static com.epam.jwd.core_final.util.InputValidator.validateLongInput;
+
 public class MenuMissionServiceImpl implements MenuMissionService {
 
     private static MenuMissionServiceImpl instance;
@@ -33,28 +36,8 @@ public class MenuMissionServiceImpl implements MenuMissionService {
         System.out.println("Enter the mission's name:");
         String name = scanner.nextLine();
 
-        long input;
-        do {
-            System.out.println("Enter the distance:\n");
-            while (!scanner.hasNextLong()) {
-                System.out.println("That's not a number!");
-                scanner.next();
-            }
-            input = scanner.nextLong();
-        } while (input < 0);
-
-        Long distance = input;
-
-        do {
-            System.out.println("Enter the duration in days:\n");
-            while (!scanner.hasNextLong()) {
-                System.out.println("That's not a number!");
-                scanner.next();
-            }
-            input = scanner.nextLong();
-        } while (input < 0);
-
-        Long duration = input;
+        Long distance = validateLongInput("Enter the distance:\n");
+        Long duration = validateLongInput("Enter the duration in days:\n");
 
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern(ApplicationProperties.getInstance().getDateTimeFormat());
         LocalDateTime startDate = LocalDateTime.now().plusDays((long) (Math.random() * 100));
@@ -73,15 +56,7 @@ public class MenuMissionServiceImpl implements MenuMissionService {
 
     public void searchMissionById() throws StorageException {
         Scanner scanner = new Scanner(System.in);
-        long input;
-        do {
-            System.out.println("Enter the id\n");
-            while (!scanner.hasNextLong()) {
-                System.out.println("That's not a number!");
-                scanner.next();
-            }
-            input = scanner.nextLong();
-        } while (input < 0);
+        long input = validateLongInput("Enter the id\n");
 
         FlightMissionCriteria criteria = FlightMissionCriteria
                 .builder()
@@ -107,15 +82,7 @@ public class MenuMissionServiceImpl implements MenuMissionService {
 
     public void searchMissionByDistance() throws StorageException {
         Scanner scanner = new Scanner(System.in);
-        long input;
-        do {
-            System.out.println("Enter the distance\n");
-            while (!scanner.hasNextLong()) {
-                System.out.println("That's not a number!");
-                scanner.next();
-            }
-            input = scanner.nextLong();
-        } while (input < 0);
+        long input = validateLongInput("Enter the distance\n");
 
         FlightMissionCriteria criteria = FlightMissionCriteria
                 .builder()
@@ -127,12 +94,19 @@ public class MenuMissionServiceImpl implements MenuMissionService {
     }
 
     public void searchAllByStartDate() throws StorageException {
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("Enter the start date in format " + ApplicationProperties.getInstance().getDateTimeFormat());
+
+        int year = validateIntInput("Enter the year YYYY:\n");
+        int month = validateIntInput("Enter the month MM:\n");
+        int day = validateIntInput("Enter the day DD:\n");
+        int hour = validateIntInput("Enter the hour:\n");
+        int minute = validateIntInput("Enter the minute MM:\n");
+        int second = validateIntInput("Enter the second SS:\n");
+
+        LocalDateTime date = LocalDateTime.of(year, month, day, hour, minute, second);
 
         FlightMissionCriteria criteria = FlightMissionCriteria
                 .builder()
-                .startDate(LocalDateTime.parse(scanner.nextLine()))
+                .startDate(date)
                 .build();
 
         List<FlightMission> result = MissionServiceImpl.getInstance().findAllMissionsByCriteria(criteria);
@@ -162,22 +136,10 @@ public class MenuMissionServiceImpl implements MenuMissionService {
 
     public void updateMissionDistance() {
         if (!this.entity.getMissionStatus().equals(MissionStatus.FAILED)) {
-
-            Scanner scanner = new Scanner(System.in);
-            long input;
-            do {
-                System.out.println("Enter the distance\n");
-                while (!scanner.hasNextLong()) {
-                    System.out.println("That's not a number!");
-                    scanner.next();
-                }
-                input = scanner.nextLong();
-            } while (input < 0);
-
+            long input = validateLongInput("Enter the distance\n");
             this.entity.setDistance(input);
 
             System.out.println("Distance updated!");
-
         } else {
             System.out.println("Mission's distance can't be updated, because mission is failed");
         }
@@ -185,21 +147,11 @@ public class MenuMissionServiceImpl implements MenuMissionService {
 
     public void updateMissionDuration() {
         if (!this.entity.getMissionStatus().equals(MissionStatus.FAILED)) {
-
-            Scanner scanner = new Scanner(System.in);
-            long duration;
-            do {
-                System.out.println("Enter the new duration in days:\n");
-                while (!scanner.hasNextLong()) {
-                    System.out.println("That's not a number!");
-                    scanner.next();
-                }
-                duration = scanner.nextLong();
-            } while (duration < 0);
+            long duration = validateLongInput("Enter the new duration in days:\n");
 
             while (entity.getStartDate().plusDays(duration).isAfter(LocalDateTime.now())) {
                 System.out.println("Duration is too low!");
-                duration = scanner.nextLong();
+                duration = validateLongInput("Enter the new duration in days:\n");
             }
 
             this.entity.setEndDate(entity.getStartDate().plusDays(duration));

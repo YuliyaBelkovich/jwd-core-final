@@ -54,11 +54,11 @@ public class MissionServiceImpl implements MissionService {
                 })
                 .filter(flightMission -> {
                     LocalDateTime startDate = criteria.getStartDate();
-                    return startDate == null || flightMission.getStartDate().equals(startDate);
+                    return startDate == null || flightMission.getStartDate().isEqual(startDate);
                 })
                 .filter(flightMission -> {
-                    LocalDateTime endDate = criteria.getStartDate();
-                    return endDate == null || flightMission.getEndDate().equals(endDate);
+                    LocalDateTime endDate = criteria.getEndDate();
+                    return endDate == null || flightMission.getEndDate().isEqual(endDate);
                 })
                 .filter(flightMission -> {
                     Long distance = criteria.getDistance();
@@ -77,11 +77,11 @@ public class MissionServiceImpl implements MissionService {
                 })
                 .filter(flightMission -> {
                     LocalDateTime startDate = criteria.getStartDate();
-                    return startDate == null || flightMission.getStartDate().equals(startDate);
+                    return startDate == null || flightMission.getStartDate().isEqual(startDate);
                 })
                 .filter(flightMission -> {
                     LocalDateTime endDate = criteria.getStartDate();
-                    return endDate == null || flightMission.getEndDate().equals(endDate);
+                    return endDate == null || flightMission.getEndDate().isEqual(endDate);
                 })
                 .filter(flightMission -> {
                     Long distance = criteria.getDistance();
