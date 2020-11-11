@@ -107,6 +107,7 @@ public class MissionServiceImpl implements MissionService {
             CrewService crewService = CrewServiceImpl.getInstance();
             crewService.assignCrewMemberOnMission(mission);
         } catch (StorageException e) {
+            System.out.println(e.getMessage());
             throw new EntityCreationException("Flight Mission");
         }
 

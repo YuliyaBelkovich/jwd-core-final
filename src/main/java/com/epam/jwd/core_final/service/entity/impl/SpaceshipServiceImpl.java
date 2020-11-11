@@ -50,7 +50,7 @@ public class SpaceshipServiceImpl implements SpaceshipService {
                 })
                 .filter(spaceship -> {
                     Long distance = criteria.getDistance();
-                    return distance == null || spaceship.getDistance().equals(distance);
+                    return distance == null || spaceship.getDistance()>distance;
                 })
                 .filter(spaceship -> {
                     Map<Role, Short> capacity = criteria.getCapacity();
