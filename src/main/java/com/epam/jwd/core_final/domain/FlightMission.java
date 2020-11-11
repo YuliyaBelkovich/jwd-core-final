@@ -1,6 +1,5 @@
 package com.epam.jwd.core_final.domain;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -68,11 +67,6 @@ public class FlightMission extends AbstractBaseEntity {
         return this.missionStatus;
     }
 
-    public MissionStatus updateMissionStatus() {
-        return MissionStatus.updateMissionStatus(this);
-    }
-
-
     public void setStartDate(LocalDateTime startDate) {
         this.startDate = startDate;
     }
@@ -113,6 +107,6 @@ public class FlightMission extends AbstractBaseEntity {
                                 .getInstance()
                                 .getDateTimeFormat())) + "\n" +
                 "Spaceship: " + spaceship.getName() + "\n" +
-                "Status: " + updateMissionStatus() + "\n";
+                "Status: " + missionStatus + "\n";
     }
 }

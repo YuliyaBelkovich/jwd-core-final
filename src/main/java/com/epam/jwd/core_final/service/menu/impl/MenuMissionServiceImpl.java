@@ -2,6 +2,7 @@ package com.epam.jwd.core_final.service.menu.impl;
 
 import com.epam.jwd.core_final.criteria.FlightMissionCriteria;
 import com.epam.jwd.core_final.domain.ApplicationProperties;
+import com.epam.jwd.core_final.domain.CrewMember;
 import com.epam.jwd.core_final.domain.FlightMission;
 import com.epam.jwd.core_final.domain.MissionStatus;
 import com.epam.jwd.core_final.exception.EntityCreationException;
@@ -37,8 +38,8 @@ public class MenuMissionServiceImpl implements MenuMissionService {
         System.out.println("Enter the mission's name:");
         String name = scanner.nextLine();
 
-        Long distance = validateLongInput("Enter the distance:\n");
-        Long duration = validateLongInput("Enter the duration in days:\n");
+        long distance = validateLongInput("Enter the distance:\n");
+        long duration = validateLongInput("Enter the duration in days:\n");
 
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern(ApplicationProperties.getInstance().getDateTimeFormat());
         LocalDateTime startDate = LocalDateTime.now().plusDays((long) (Math.random() * 100));
@@ -91,11 +92,11 @@ public class MenuMissionServiceImpl implements MenuMissionService {
                 .build();
 
         this.entity = MissionServiceImpl.getInstance().findMissionByCriteria(criteria).orElseThrow(() -> new StorageException("Mission not found"));
+        System.out.println(entity.toString());
         MissionServiceImpl.getInstance().writeOneMissionToJson(entity);
     }
 
     public void searchMissionByDistance() throws StorageException {
-        Scanner scanner = new Scanner(System.in);
         long input = validateLongInput("Enter the distance\n");
 
         FlightMissionCriteria criteria = FlightMissionCriteria
@@ -104,6 +105,7 @@ public class MenuMissionServiceImpl implements MenuMissionService {
                 .build();
 
         this.entity = MissionServiceImpl.getInstance().findMissionByCriteria(criteria).orElseThrow(() -> new StorageException("Mission not found"));
+        System.out.println(entity.toString());
         MissionServiceImpl.getInstance().writeOneMissionToJson(entity);
     }
 
@@ -173,6 +175,41 @@ public class MenuMissionServiceImpl implements MenuMissionService {
 
         } else {
             System.out.println("Mission's duration can't be updated, because mission is failed");
+        }
+    }
+
+    public void updateMissionStatus() {
+        LocalDateTime currentDate = LocalDateTime.now();
+
+        if (currentDate.isBefore(this.entity.getStartDate())) {
+            this.entity.setMissionStatus(MissionStatus.PLANNED);
+            System.out.println("Status updated! Current info:\n" + this.entity);
+        } else if (currentDate.isAfter(this.entity.getStartDate()) || currentDate.isBefore(this.entity.getEndDate())) {
+            changeAvailability(this.entity, false);
+
+            double chanceOfFailure = 0.03;
+            double currentValue = Math.random();
+
+            if (currentValue < chanceOfFailure) {
+                this.entity.setMissionStatus(MissionStatus.FAILED);
+            } else {
+                this.entity.setMissionStatus(MissionStatus.IN_PROGRESS);
+            }
+            System.out.println("Status updated! Current info:\n" + this.entity);
+        } else {
+            if (!this.entity.getMissionStatus().equals(MissionStatus.FAILED)) {
+                changeAvailability(this.entity, true);
+                this.entity.setMissionStatus(MissionStatus.COMPLETED);
+            }
+            System.out.println("Status updated! Current info:\n" + this.entity);
+        }
+    }
+
+    private void changeAvailability(FlightMission mission, boolean status) {
+        mission.getSpaceship().setReadyForNextMissions(status);
+
+        for (CrewMember member : mission.getAssignedCrew()) {
+            member.setReadyForNextMissions(status);
         }
     }
 }

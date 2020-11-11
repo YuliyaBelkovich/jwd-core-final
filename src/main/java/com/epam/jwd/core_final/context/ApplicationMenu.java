@@ -1,6 +1,7 @@
 package com.epam.jwd.core_final.context;
 
 import com.epam.jwd.core_final.context.menu.Menu;
+
 import static com.epam.jwd.core_final.util.InputValidator.validateIntInput;
 
 // todo replace Object with your own types
@@ -39,7 +40,8 @@ public interface ApplicationMenu {
                 System.out.println("Press 1 to change the name\n" +
                         "Press 2 to change the distance\n" +
                         "Press 3 to change the duration\n" +
-                        "Press 4 to return to the mission control panel\n");
+                        "Press 4 to update mission status\n" +
+                        "Press 5 to return to the mission control panel\n");
                 break;
             }
             case CREW_CONTROL: {
@@ -82,16 +84,16 @@ public interface ApplicationMenu {
                         "Press 3 to return to the spaceship control panel\n");
                 break;
             }
-            case EXIT:{
+            case EXIT: {
                 System.out.println("Goodbye Your Majesty! Hope to see you soon! ^-^");
             }
             default: {
+                System.out.println("Try again!\n");
             }
         }
     }
 
     default Integer handleUserInput() {
-        int input = validateIntInput("Your choice\n");
-        return input;
+        return validateIntInput("Waiting for the commands, sir!\n");
     }
 }

@@ -15,7 +15,6 @@ package com.epam.jwd.core_final.domain;
  * dateTimeFormat {@link String} - date/time format for {@link java.time.format.DateTimeFormatter} pattern
  */
 
-// singleton
 public final class ApplicationProperties {
 
     private static ApplicationProperties applicationProperties;

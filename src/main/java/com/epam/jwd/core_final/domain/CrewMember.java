@@ -2,6 +2,7 @@ package com.epam.jwd.core_final.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+
 /**
  * Expected fields:
  * <p>

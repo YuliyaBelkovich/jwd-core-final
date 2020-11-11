@@ -1,6 +1,7 @@
 package com.epam.jwd.core_final.criteria;
 
 import com.epam.jwd.core_final.domain.FlightMission;
+import com.epam.jwd.core_final.domain.MissionStatus;
 
 import java.time.LocalDateTime;
 
@@ -11,12 +12,14 @@ public class FlightMissionCriteria extends Criteria<FlightMission> {
     private final LocalDateTime startDate;
     private final LocalDateTime endDate;
     private final Long distance;
+    private final MissionStatus missionStatus;
 
-    public FlightMissionCriteria(String name, Long id, LocalDateTime startDate, LocalDateTime endDate, Long distance) {
+    public FlightMissionCriteria(String name, Long id, LocalDateTime startDate, LocalDateTime endDate, Long distance, MissionStatus missionStatus) {
         super(id, name);
         this.startDate = startDate;
         this.endDate = endDate;
         this.distance = distance;
+        this.missionStatus = missionStatus;
     }
 
 
@@ -39,6 +42,10 @@ public class FlightMissionCriteria extends Criteria<FlightMission> {
         return distance;
     }
 
+    public MissionStatus getMissionStatus() {
+        return missionStatus;
+    }
+
     @Override
     public String toString() {
         return "FlightMissionCriteria{" +
@@ -49,9 +56,10 @@ public class FlightMissionCriteria extends Criteria<FlightMission> {
     }
 
     public static class Builder extends Criteria.Builder<FlightMissionCriteria.Builder> {
-        LocalDateTime startDate;
-        LocalDateTime endDate;
-        Long distance;
+        public LocalDateTime startDate;
+        public LocalDateTime endDate;
+        public Long distance;
+        public MissionStatus missionStatus;
 
 
         public Builder startDate(LocalDateTime value) {
@@ -69,8 +77,13 @@ public class FlightMissionCriteria extends Criteria<FlightMission> {
             return this;
         }
 
+        public Builder missionStatus(MissionStatus value){
+            this.missionStatus = missionStatus;
+            return this;
+        }
+
         public FlightMissionCriteria build() {
-            return new FlightMissionCriteria(name, id, startDate, endDate, distance);
+            return new FlightMissionCriteria(name, id, startDate, endDate, distance, missionStatus);
         }
     }
 }

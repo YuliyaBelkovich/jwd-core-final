@@ -3,6 +3,7 @@ package com.epam.jwd.core_final.service.entity.impl;
 import com.epam.jwd.core_final.context.impl.NassaContext;
 import com.epam.jwd.core_final.criteria.FlightMissionCriteria;
 import com.epam.jwd.core_final.domain.ApplicationProperties;
+import com.epam.jwd.core_final.domain.CrewMember;
 import com.epam.jwd.core_final.domain.FlightMission;
 import com.epam.jwd.core_final.domain.MissionStatus;
 import com.epam.jwd.core_final.exception.EntityCreationException;
@@ -64,6 +65,10 @@ public class MissionServiceImpl implements MissionService {
                     Long distance = criteria.getDistance();
                     return distance == null || flightMission.getDistance().equals(distance);
                 })
+                .filter(flightMission -> {
+                    MissionStatus missionStatus = criteria.getMissionStatus();
+                    return  missionStatus == null || flightMission.getMissionStatus().equals(missionStatus);
+                })
                 .collect(Collectors.toList());
     }
 
@@ -86,6 +91,10 @@ public class MissionServiceImpl implements MissionService {
                 .filter(flightMission -> {
                     Long distance = criteria.getDistance();
                     return distance == null || flightMission.getDistance().equals(distance);
+                })
+                .filter(flightMission -> {
+                    MissionStatus missionStatus = criteria.getMissionStatus();
+                    return  missionStatus == null || flightMission.getMissionStatus().equals(missionStatus);
                 })
                 .findAny();
     }
@@ -120,10 +129,10 @@ public class MissionServiceImpl implements MissionService {
     }
 
     public void writeOneMissionToJson(FlightMission flightMission) {
-        String baseFile = "src" + File.separator
-                + "main" + File.separator +
+        String baseFile = "src" + File.separator +
+                "main" + File.separator +
                 "resources" + File.separator +
-                "output" + File.separator +
+                ApplicationProperties.getInstance().getOutputRootDir() + File.separator +
                 ApplicationProperties.getInstance().getMissionsFileName() + ".json";
 
         File file = new File(baseFile);
@@ -143,11 +152,11 @@ public class MissionServiceImpl implements MissionService {
         }
     }
 
-    public void writeMissionsListToJson(List <FlightMission> flightMissions) {
-        String baseFile = "src" + File.separator
-                + "main" + File.separator +
+    public void writeMissionsListToJson(List<FlightMission> flightMissions) {
+        String baseFile = "src" + File.separator +
+                "main" + File.separator +
                 "resources" + File.separator +
-                "output" + File.separator +
+                ApplicationProperties.getInstance().getOutputRootDir() + File.separator +
                 ApplicationProperties.getInstance().getMissionsFileName() + ".json";
 
         File file = new File(baseFile);

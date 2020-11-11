@@ -18,4 +18,6 @@ public interface MenuMissionService {
     void updateMissionDistance();
 
     void updateMissionDuration();
+
+    void updateMissionStatus();
 }

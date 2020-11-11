@@ -22,7 +22,7 @@ import java.util.function.Supplier;
 public class MenuContext {
 
     private static MenuContext menuContext;
-    Map<KeyMenu, Supplier<Menu>> storage = new HashMap<>();
+    private static Map<KeyMenu, Supplier<Menu>> storage = new HashMap<>();
     private static final Logger logger = Logger.getLogger(MenuContext.class);
 
     {
@@ -151,7 +151,7 @@ public class MenuContext {
     }
 
     private void assignMissionUpdateOptions() {
-        /*update mission's name*/
+        /*change mission's name*/
         this.storage.put(new KeyMenu(Menu.MISSION_UPDATE, 1), () -> {
             MenuMissionService service = MenuMissionServiceImpl.getInstance();
             service.updateMissionName();
@@ -159,7 +159,7 @@ public class MenuContext {
             return Menu.MISSION_CONTROL;
         });
 
-        /*update mission distance*/
+        /*change mission distance*/
         this.storage.put(new KeyMenu(Menu.MISSION_UPDATE, 2), () -> {
             MenuMissionService service = MenuMissionServiceImpl.getInstance();
             service.updateMissionDistance();
@@ -167,15 +167,22 @@ public class MenuContext {
             return Menu.MISSION_CONTROL;
         });
 
-        /*update mission duration*/
+        /*change mission duration*/
         this.storage.put(new KeyMenu(Menu.MISSION_UPDATE, 3), () -> {
             MenuMissionService service = MenuMissionServiceImpl.getInstance();
             service.updateMissionDuration();
 
             return Menu.MISSION_CONTROL;
         });
+        /*update mission status*/
+        this.storage.put(new KeyMenu(Menu.MISSION_UPDATE, 4), () -> {
+            MenuMissionService service = MenuMissionServiceImpl.getInstance();
+            service.updateMissionStatus();
 
-        this.storage.put(new KeyMenu(Menu.MISSION_UPDATE, 4), () -> Menu.MISSION_CONTROL);    /*exit from mission update*/
+            return Menu.MISSION_CONTROL;
+        });
+
+        this.storage.put(new KeyMenu(Menu.MISSION_UPDATE, 5), () -> Menu.MISSION_CONTROL);    /*exit from mission update*/
     }
 
     private void assignCrewControlMenuOptions() {
@@ -251,7 +258,7 @@ public class MenuContext {
     }
 
     private void assignCrewUpdateOptions() {
-        /*update crew member's name*/
+        /*change crew member's name*/
         this.storage.put(new KeyMenu(Menu.CREW_UPDATE, 1), () -> {
             MenuCrewService service = MenuCrewServiceImpl.getInstance();
             service.updateCrewMembersName();
@@ -259,7 +266,7 @@ public class MenuContext {
             return Menu.CREW_CONTROL;
         });
 
-        /*update crew member's role*/
+        /*change crew member's role*/
         this.storage.put(new KeyMenu(Menu.CREW_UPDATE, 2), () -> {
             MenuCrewService service = MenuCrewServiceImpl.getInstance();
             service.updateCrewMembersRole();
@@ -267,7 +274,7 @@ public class MenuContext {
             return Menu.CREW_CONTROL;
         });
 
-        /*update crew member's rank*/
+        /*change crew member's rank*/
         this.storage.put(new KeyMenu(Menu.CREW_UPDATE, 3), () -> {
             MenuCrewService service = MenuCrewServiceImpl.getInstance();
             service.updateCrewMembersRank();
@@ -339,7 +346,7 @@ public class MenuContext {
     }
 
     private void assignSpaceshipUpdateOptions() {
-        /*update spaceship's name*/
+        /*change spaceship's name*/
         this.storage.put(new KeyMenu(Menu.SPACESHIP_UPDATE, 1), () -> {
             MenuSpaceshipService service = MenuSpaceshipServiceImpl.getInstance();
             service.updateSpaceshipsName();
@@ -347,7 +354,7 @@ public class MenuContext {
             return Menu.SPACESHIP_CONTROL;
         });
 
-        /*update spaceship's distance*/
+        /*change spaceship's distance*/
         this.storage.put(new KeyMenu(Menu.SPACESHIP_UPDATE, 2), () -> {
             MenuSpaceshipService service = MenuSpaceshipServiceImpl.getInstance();
             service.updateSpaceshipsDistance();

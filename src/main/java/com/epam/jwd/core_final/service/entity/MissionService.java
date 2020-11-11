@@ -2,6 +2,7 @@ package com.epam.jwd.core_final.service.entity;
 
 import com.epam.jwd.core_final.criteria.FlightMissionCriteria;
 import com.epam.jwd.core_final.domain.FlightMission;
+import com.epam.jwd.core_final.domain.MissionStatus;
 import com.epam.jwd.core_final.exception.EntityCreationException;
 
 import java.time.LocalDateTime;

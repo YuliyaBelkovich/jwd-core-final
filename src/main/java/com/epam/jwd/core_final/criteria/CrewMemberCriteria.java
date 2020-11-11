@@ -28,8 +28,8 @@ public class CrewMemberCriteria extends Criteria<CrewMember> {
     }
 
     public static class Builder extends Criteria.Builder<CrewMemberCriteria.Builder> {
-        Integer roleId;
-        Integer rankId;
+        public Integer roleId;
+        public Integer rankId;
 
         public Builder roleId(Integer value) {
             this.roleId = value;
