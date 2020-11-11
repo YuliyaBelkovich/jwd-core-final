@@ -53,11 +53,19 @@ public class MenuCrewServiceImpl implements MenuCrewService {
 
     public void searchAllCrewMembersByRank() throws StorageException {
         Scanner scanner = new Scanner(System.in);
-        System.out.println("Enter the rank id\n");
+        int input;
+        do {
+            System.out.println("Enter the rank id\n");
+            while (!scanner.hasNextInt()) {
+                System.out.println("That's not a number!");
+                scanner.next();
+            }
+            input = scanner.nextInt();
+        } while (input < 0);
 
         CrewMemberCriteria criteria = CrewMemberCriteria
                 .builder()
-                .rankId(scanner.nextInt())
+                .rankId(input)
                 .build();
         try {
             List<CrewMember> result = CrewServiceImpl.getInstance().findAllCrewMembersByCriteria(criteria);
@@ -75,11 +83,19 @@ public class MenuCrewServiceImpl implements MenuCrewService {
 
     public void searchAllCrewMembersByRole() throws StorageException {
         Scanner scanner = new Scanner(System.in);
-        System.out.println("Enter the role id\n");
+        int input;
+        do {
+            System.out.println("Enter the role id\n");
+            while (!scanner.hasNextInt()) {
+                System.out.println("That's not a number!");
+                scanner.next();
+            }
+            input = scanner.nextInt();
+        } while (input < 0);
 
         CrewMemberCriteria criteria = CrewMemberCriteria
                 .builder()
-                .roleId(scanner.nextInt())
+                .roleId(input)
                 .build();
         try {
             List<CrewMember> result = CrewServiceImpl.getInstance().findAllCrewMembersByCriteria(criteria);
@@ -109,8 +125,17 @@ public class MenuCrewServiceImpl implements MenuCrewService {
     public void updateCrewMembersRole() {
         if (this.entity.isReadyForNextMissions()) {
             Scanner scanner = new Scanner(System.in);
-            System.out.println("Enter the new role id\n");
-            this.entity.setRole(Role.resolveRoleById(scanner.nextInt()));
+            int input;
+            do {
+                System.out.println("Enter the role id\n");
+                while (!scanner.hasNextInt()) {
+                    System.out.println("That's not a number!");
+                    scanner.next();
+                }
+                input = scanner.nextInt();
+            } while (input < 0);
+
+            this.entity.setRole(Role.resolveRoleById(input));
             System.out.println("Role updated!");
         } else {
             System.out.println("Sorry, this crew member is not available to update!\n");
@@ -120,8 +145,17 @@ public class MenuCrewServiceImpl implements MenuCrewService {
     public void updateCrewMembersRank() {
         if (this.entity.isReadyForNextMissions()) {
             Scanner scanner = new Scanner(System.in);
-            System.out.println("Enter the new rank id\n");
-            this.entity.setRank(Rank.resolveRankById(scanner.nextInt()));
+            int input;
+            do {
+                System.out.println("Enter the rank id\n");
+                while (!scanner.hasNextInt()) {
+                    System.out.println("That's not a number!");
+                    scanner.next();
+                }
+                input = scanner.nextInt();
+            } while (input < 0);
+
+            this.entity.setRank(Rank.resolveRankById(input));
             System.out.println("Rank updated!");
         } else {
             System.out.println("Sorry, this crew member is not available to update!\n");

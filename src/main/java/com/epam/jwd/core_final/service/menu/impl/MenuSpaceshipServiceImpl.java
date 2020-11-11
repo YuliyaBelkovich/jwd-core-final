@@ -48,10 +48,19 @@ public class MenuSpaceshipServiceImpl implements MenuSpaceshipService {
 
     public void searchSpaceshipByDistance() throws StorageException {
         Scanner scanner = new Scanner(System.in);
-        System.out.println("Enter the distance\n");
+        long input;
+        do {
+            System.out.println("Enter the distance\n");
+            while (!scanner.hasNextLong()) {
+                System.out.println("That's not a number!");
+                scanner.next();
+            }
+            input = scanner.nextLong();
+        } while (input < 0);
+
         SpaceshipCriteria criteria = SpaceshipCriteria
                 .builder()
-                .distance(scanner.nextLong())
+                .distance(input)
                 .build();
 
         this.entity = SpaceshipServiceImpl.getInstance().findSpaceshipByCriteria(criteria).orElseThrow(() -> new StorageException("Spaceship not found"));
@@ -73,7 +82,15 @@ public class MenuSpaceshipServiceImpl implements MenuSpaceshipService {
     public void updateSpaceshipsDistance() {
         if (entity.isReadyForNextMissions()) {
             Scanner scanner = new Scanner(System.in);
-            System.out.println("Enter the new spaceship's name\n");
+            long input;
+            do {
+                System.out.println("Enter the new spaceship's distance\n");
+                while (!scanner.hasNextLong()) {
+                    System.out.println("That's not a number!");
+                    scanner.next();
+                }
+                input = scanner.nextLong();
+            } while (input < 0);
 
             this.entity.setDistance(scanner.nextLong());
             System.out.println("Distance updated!");

@@ -30,14 +30,31 @@ public class MenuMissionServiceImpl implements MenuMissionService {
 
     public void createMission() {
         Scanner scanner = new Scanner(System.in);
-        System.out.println("Enter the name");
+        System.out.println("Enter the mission's name:");
         String name = scanner.nextLine();
 
-        System.out.println("Enter the distance");
-        Long distance = scanner.nextLong();
+        long input;
+        do {
+            System.out.println("Enter the distance:\n");
+            while (!scanner.hasNextLong()) {
+                System.out.println("That's not a number!");
+                scanner.next();
+            }
+            input = scanner.nextLong();
+        } while (input < 0);
 
-        System.out.println("Enter the duration in days");
-        Long duration = scanner.nextLong();
+        Long distance = input;
+
+        do {
+            System.out.println("Enter the duration in days:\n");
+            while (!scanner.hasNextLong()) {
+                System.out.println("That's not a number!");
+                scanner.next();
+            }
+            input = scanner.nextLong();
+        } while (input < 0);
+
+        Long duration = input;
 
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern(ApplicationProperties.getInstance().getDateTimeFormat());
         LocalDateTime startDate = LocalDateTime.now().plusDays((long) (Math.random() * 100));
@@ -56,11 +73,19 @@ public class MenuMissionServiceImpl implements MenuMissionService {
 
     public void searchMissionById() throws StorageException {
         Scanner scanner = new Scanner(System.in);
-        System.out.println("Enter the id\n");
+        long input;
+        do {
+            System.out.println("Enter the id\n");
+            while (!scanner.hasNextLong()) {
+                System.out.println("That's not a number!");
+                scanner.next();
+            }
+            input = scanner.nextLong();
+        } while (input < 0);
 
         FlightMissionCriteria criteria = FlightMissionCriteria
                 .builder()
-                .id(scanner.nextLong())
+                .id(input)
                 .build();
 
         this.entity = MissionServiceImpl.getInstance().findMissionByCriteria(criteria).orElseThrow(() -> new StorageException("Mission not found"));
@@ -82,11 +107,19 @@ public class MenuMissionServiceImpl implements MenuMissionService {
 
     public void searchMissionByDistance() throws StorageException {
         Scanner scanner = new Scanner(System.in);
-        System.out.println("Enter the distance\n");
+        long input;
+        do {
+            System.out.println("Enter the distance\n");
+            while (!scanner.hasNextLong()) {
+                System.out.println("That's not a number!");
+                scanner.next();
+            }
+            input = scanner.nextLong();
+        } while (input < 0);
 
         FlightMissionCriteria criteria = FlightMissionCriteria
                 .builder()
-                .distance(scanner.nextLong())
+                .distance(input)
                 .build();
 
         this.entity = MissionServiceImpl.getInstance().findMissionByCriteria(criteria).orElseThrow(() -> new StorageException("Mission not found"));
@@ -131,8 +164,17 @@ public class MenuMissionServiceImpl implements MenuMissionService {
         if (!this.entity.getMissionStatus().equals(MissionStatus.FAILED)) {
 
             Scanner scanner = new Scanner(System.in);
-            System.out.println("Enter the new duration\n");
-            this.entity.setDistance(scanner.nextLong());
+            long input;
+            do {
+                System.out.println("Enter the distance\n");
+                while (!scanner.hasNextLong()) {
+                    System.out.println("That's not a number!");
+                    scanner.next();
+                }
+                input = scanner.nextLong();
+            } while (input < 0);
+
+            this.entity.setDistance(input);
 
             System.out.println("Distance updated!");
 
@@ -145,8 +187,15 @@ public class MenuMissionServiceImpl implements MenuMissionService {
         if (!this.entity.getMissionStatus().equals(MissionStatus.FAILED)) {
 
             Scanner scanner = new Scanner(System.in);
-            System.out.println("Enter the new duration in days");
-            Long duration = scanner.nextLong();
+            long duration;
+            do {
+                System.out.println("Enter the new duration in days:\n");
+                while (!scanner.hasNextLong()) {
+                    System.out.println("That's not a number!");
+                    scanner.next();
+                }
+                duration = scanner.nextLong();
+            } while (duration < 0);
 
             while (entity.getStartDate().plusDays(duration).isAfter(LocalDateTime.now())) {
                 System.out.println("Duration is too low!");
