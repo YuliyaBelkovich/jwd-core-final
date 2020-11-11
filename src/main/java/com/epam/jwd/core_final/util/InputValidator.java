@@ -4,7 +4,7 @@ import java.util.Scanner;
 
 public class InputValidator {
 
-    public static int validateIntInput(String message){
+    public static int validateIntInput(String message) {
         Scanner scanner = new Scanner(System.in);
         int input;
         do {
@@ -18,7 +18,8 @@ public class InputValidator {
 
         return input;
     }
-    public static long validateLongInput(String message){
+
+    public static long validateLongInput(String message) {
         Scanner scanner = new Scanner(System.in);
         long input;
         do {
